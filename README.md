@@ -25,9 +25,9 @@ composer install
 ### Create Database
 first run XAMPP and start apache and sql
 
-#### Then goto
+#### Then goto brower and paste
 ```
-localhost/phpmyadmin
+http://localhost/phpmyadmin
 ```
 create database after database creation goto .env in the project and add the database name to
 ```
