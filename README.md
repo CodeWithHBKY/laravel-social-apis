@@ -22,14 +22,27 @@ or
 composer install
 ```
 
-## Run project
+### Create Database
+first run XAMPP and start apache and sql
 
+#### Then goto
 ```
-php artisan server
+localhost/phpmyadmin
 ```
+create database after database creation goto .env in the project and add the database name to
+```
+DB_DATABASE=social_apis
+```
+"social_apis" will be your database's name
 
 ### Migrate
 
 ```
 php artisan migrate
+```
+
+### Run project
+
+```
+php artisan server
 ```
