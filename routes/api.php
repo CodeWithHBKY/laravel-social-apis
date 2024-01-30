@@ -18,9 +18,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', [\App\Http\Controllers\API\AuthController::class, 'register']);
-Route::post('login', [\App\Http\Controllers\API\AuthController::class, 'login']);
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
+Route::group(['prefix' => 'auth'], function() {
+    Route::controller(\App\Http\Controllers\API\AuthController::class)->group(function() {
+        Route::post('register','register');
+        Route::post('login','login');
+    });
+    Route::group(['middleware' => 'auth:sanctum'], function() {
+        Route::controller(\App\Http\Controllers\API\AuthController::class)->group(function() {
+            Route::get('logout', 'logout');
+            Route::get('get-profile', 'getProfile');
+        });
+    });
 });
