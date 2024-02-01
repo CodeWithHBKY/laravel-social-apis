@@ -23,6 +23,7 @@ Route::group(['prefix' => 'auth'], function() {
     Route::controller(\App\Http\Controllers\API\AuthController::class)->group(function() {
         Route::post('register','register');
         Route::post('login','login');
+        Route::get('send-mail', 'testMail');
     });
     Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::controller(\App\Http\Controllers\API\AuthController::class)->group(function() {

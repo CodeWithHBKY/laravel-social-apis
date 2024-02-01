@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -68,5 +70,14 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Logout success'
         ], 200);
+    }
+
+    public function testMail(Request $request)
+    {
+        $data = [
+            'name' => 'Joe Doe',
+            'body' => "this is a test message"
+        ];
+        Mail::to('talashhh9@gmail.com')->send(new TestMail('test subject', $data));
     }
 }
