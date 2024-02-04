@@ -24,11 +24,15 @@ Route::group(['prefix' => 'auth'], function() {
         Route::post('register','register');
         Route::post('login','login');
         Route::get('send-mail', 'testMail');
+        Route::post('forget-password-request', 'forgetPasswordRequest');
+        Route::post('forget-password', 'verifyAndChangePassword');
     });
     Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::controller(\App\Http\Controllers\API\AuthController::class)->group(function() {
             Route::get('logout', 'logout');
             Route::get('get-profile', 'getProfile');
+            Route::post('change-password', 'changePassword');
+            Route::post('update-profile', 'updateProfile');
         });
     });
 });
