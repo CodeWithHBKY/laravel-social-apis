@@ -36,3 +36,9 @@ Route::group(['prefix' => 'auth'], function() {
         });
     });
 });
+
+Route::group(['middleware' => 'auth:sanctum'], function() {
+    Route::group(['prefix' => 'user'], function(){
+        Route::apiResource('posts', \App\Http\Controllers\API\PostController::class);
+    });
+});
