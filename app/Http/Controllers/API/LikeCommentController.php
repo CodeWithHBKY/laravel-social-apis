@@ -38,7 +38,11 @@ class LikeCommentController extends Controller
             ]);
         }
 
+        if ($exists) {
+            return response()->json(['likeId' => $exists->id], 200);
+        }
 
-        return response()->json($like ?? Null);
+
+        return response()->json($like, 201);
     }
 }
