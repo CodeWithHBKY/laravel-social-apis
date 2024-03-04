@@ -22,7 +22,7 @@ class LikeCommentController extends Controller
             'content' => $request->content,
         ]);
 
-        return response()->json($comment);
+        return response()->json($comment->load('user:id,first_name,last_name'));
     }
 
     public function LikeUnlike(Request $request, $postId)
