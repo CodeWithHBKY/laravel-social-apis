@@ -58,7 +58,8 @@ class PostController extends Controller
 
         return response()->json([
             'message' => 'Post Created',
-            'data' => $post
+            'data' => $post->load(['user:id,first_name,last_name', 'comments.user:id,first_name,last_name', 'likes.user:id,first_name,last_name'])
+            ->loadCount(['likes', 'comments'])
         ]);
     }
 
