@@ -21,8 +21,11 @@ class LikeCommentController extends Controller
             'post_id' => $request->post_id,
             'content' => $request->content,
         ]);
+        $comment->load('user:id,first_name,last_name');
 
-        return response()->json($comment->load('user:id,first_name,last_name'));
+        broadcast(new \App\Events\CommentEvent($comment))->toOthers();
+
+        return response()->json($comment);
     }
 
     public function LikeUnlike(Request $request, $postId)

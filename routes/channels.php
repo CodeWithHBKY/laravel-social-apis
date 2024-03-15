@@ -20,3 +20,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('post', function ($user) {
     return $user;
 });
+
+Broadcast::channel('comment', function ($user) {
+    return $user;
+});
