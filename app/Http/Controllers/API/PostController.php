@@ -56,10 +56,14 @@ class PostController extends Controller
             'visibility' => $request->visibility ?? 'public'
         ]);
 
+        $post->load(['user:id,first_name,last_name', 'comments.user:id,first_name,last_name', 'likes.user:id,first_name,last_name'])
+            ->loadCount(['likes', 'comments']);
+
+        broadcast(new \App\Events\PostEvent($post));
+
         return response()->json([
             'message' => 'Post Created',
-            'data' => $post->load(['user:id,first_name,last_name', 'comments.user:id,first_name,last_name', 'likes.user:id,first_name,last_name'])
-            ->loadCount(['likes', 'comments'])
+            'data' => $post
         ]);
     }
 
