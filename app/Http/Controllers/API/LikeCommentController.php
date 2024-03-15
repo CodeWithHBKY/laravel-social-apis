@@ -33,19 +33,25 @@ class LikeCommentController extends Controller
         $user = $request->user();
         $exists = Like::where('user_id', $user->id)->where('post_id', $postId)->first();
         if ($exists) {
+            $type = 'unlike';
             $exists->delete();
         }else {
+            $type = 'like';
             $like = Like::create([
                 'user_id' => $user->id,
                 'post_id' => $postId,
             ]);
         }
 
-        if ($exists) {
-            return response()->json(['likeId' => $exists->id], 200);
-        }
+        $like->load('user:id,first_name,last_name');
+        $data = [
+            'type' => $type,
+            $like => $exists ? ['like_id' => $exists->id] : $like,
+        ];
+
+        broadcast(new \App\Events\LikeEvent($data));
 
 
-        return response()->json($like, 201);
+        return response()->json([], 200);
     }
 }

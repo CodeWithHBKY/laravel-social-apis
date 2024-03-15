@@ -24,3 +24,7 @@ Broadcast::channel('post', function ($user) {
 Broadcast::channel('comment', function ($user) {
     return $user;
 });
+
+Broadcast::channel('like', function ($user) {
+    return $user;
+});
