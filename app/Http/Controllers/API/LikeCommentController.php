@@ -41,12 +41,12 @@ class LikeCommentController extends Controller
                 'user_id' => $user->id,
                 'post_id' => $postId,
             ]);
+            $like->load('user:id,first_name,last_name');
         }
 
-        $like->load('user:id,first_name,last_name');
         $data = [
             'type' => $type,
-            $like => $exists ? ['like_id' => $exists->id] : $like,
+            'like' => $exists ? ['like_id' => $exists->id, 'post_id' => $exists->post_id] : $like,
         ];
 
         broadcast(new \App\Events\LikeEvent($data));
