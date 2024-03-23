@@ -26,7 +26,7 @@ class LikeCommentController extends Controller
             'content' => $request->content,
         ]);
         $comment->load('user:id,first_name,last_name');
-        $user = $request->user;
+        $user = $request->user();
 
         $post = Post::find($request->post_id);
         $postUser = User::find($post->user_id);
