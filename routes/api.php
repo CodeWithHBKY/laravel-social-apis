@@ -46,5 +46,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
             Route::post('comments', 'PostComment');
             Route::get('like/{postId}', 'LikeUnlike');
         });
+        Route::controller(\App\Http\Controllers\API\UserController::class)->group(function(){
+            Route::get('notifications/{id}', 'markNotificationComplete');
+            Route::get('notifications', 'markAllNotificationComplete');
+        });
     });
 });
