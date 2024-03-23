@@ -6,6 +6,10 @@ use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use App\Models\User;
+use App\Notifications\CommentNotifcation;
+use App\Notifications\LikeNotifcation;
 
 class LikeCommentController extends Controller
 {
@@ -22,6 +26,12 @@ class LikeCommentController extends Controller
             'content' => $request->content,
         ]);
         $comment->load('user:id,first_name,last_name');
+        $user = $request->user;
+
+        $post = Post::find($request->post_id);
+        $postUser = User::find($post->user_id);
+        $title = $user->first_name .' '. $user->last_name. ' Commented on your post.';
+        $postUser->notify(new CommentNotifcation($title, $post));
 
         broadcast(new \App\Events\CommentEvent($comment))->toOthers();
 
@@ -42,6 +52,10 @@ class LikeCommentController extends Controller
                 'post_id' => $postId,
             ]);
             $like->load('user:id,first_name,last_name');
+            $post = Post::find($postId);
+            $postUser = User::find($post->user_id);
+            $title = $user->first_name .' '. $user->last_name. ' Liked your post.';
+            $postUser->notify(new LikeNotifcation($title, $post));
         }
 
         $data = [

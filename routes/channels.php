@@ -28,3 +28,7 @@ Broadcast::channel('comment', function ($user) {
 Broadcast::channel('like', function ($user) {
     return $user;
 });
+
+Broadcast::channel('notifications.{id}', function ($user, $id) {
+    return (int)$user->id === (int)$id;
+});
