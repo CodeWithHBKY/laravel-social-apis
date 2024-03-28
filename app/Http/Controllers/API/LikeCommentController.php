@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
-use App\Notifications\CommentNotifcation;
+use App\Notifications\CommentNotification;
 use App\Notifications\LikeNotifcation;
 
 class LikeCommentController extends Controller
@@ -31,7 +31,7 @@ class LikeCommentController extends Controller
         $post = Post::find($request->post_id);
         $postUser = User::find($post->user_id);
         $title = $user->first_name .' '. $user->last_name. ' Commented on your post.';
-        $postUser->notify(new CommentNotifcation($title, $post));
+        $postUser->notify(new CommentNotification($title, $post));
 
         broadcast(new \App\Events\CommentEvent($comment))->toOthers();
 
